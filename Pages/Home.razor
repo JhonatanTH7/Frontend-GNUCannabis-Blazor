@@ -1,0 +1,39 @@
+﻿@page "/"
+@using GNUCannabis.Pages.Components
+
+<PageTitle>GNUCannabis</PageTitle>
+
+<div class="upper-side">
+
+    <img src="GNUCannabis_logo.png" alt="Logo GNUCannabis" class="logo" />
+</div>
+
+<div class="lower-side">
+    <GNUButton Text="Iniciar Sesion" RedirectUrl="/login">
+    </GNUButton>
+    <GNUButton Text="Registrarse" RedirectUrl="/register">
+    </GNUButton>
+</div>
+
+<style>
+    .upper-side,
+    .lower-side {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .upper-side {
+        align-items: center;
+        height: 70%;
+    }
+
+    .lower-side {
+        height: 30vh;
+        gap: 20vw;
+    }
+
+    .logo {
+        height: 60%;
+    }
+</style>

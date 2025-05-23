@@ -1,0 +1,66 @@
+@* @using Microsoft.AspNetCore.Components *@
+
+@if (ButtonType == "submit")
+{
+    <button type="submit" class="GNUButton" style="padding: @(VerticalPadding)px @(HorizontalPadding)px;">
+        @Text
+    </button>
+}
+else
+{
+    <button type="@ButtonType" class="GNUButton" style="padding: @(VerticalPadding)px @(HorizontalPadding)px;"
+        @onclick="HandleClick">
+        @Text
+    </button>
+}
+
+<style>
+    .GNUButton {
+        height: fit-content;
+        color: #000000;
+        font-size: 30px;
+        font-weight: 600;
+        border: 2px solid #85bc7d;
+        border-radius: 40px;
+        background-color: #d6ffe1;
+        box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.25);
+    }
+
+    .GNUButton:hover {
+        background-color: #85bc7d;
+        color: #ffffff;
+    }
+</style>
+
+@code {
+    [Parameter]
+    public string ButtonType { get; set; } = "button";
+
+    [Parameter]
+    public required string Text { get; set; }
+
+    [Parameter]
+    public int VerticalPadding { get; set; } = 16;
+    public int HorizontalPadding { get; set; } = 26;
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    [Parameter]
+    public string? RedirectUrl { get; set; }
+
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
+
+    private async Task HandleClick()
+    {
+        if (!string.IsNullOrEmpty(RedirectUrl))
+        {
+            NavigationManager?.NavigateTo(RedirectUrl);
+        }
+        else if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(null);
+        }
+    }
+}

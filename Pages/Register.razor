@@ -1,0 +1,32 @@
+@page "/register"
+@using GNUCannabis.Pages.Components
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Registro</PageTitle>
+<h1>Registrarse</h1>
+<EditForm>
+
+    <GNUButton Text="Registrarse" ButtonType="submit">
+    </GNUButton>
+</EditForm>
+<NavLink href="/login">¿Ya tienes cuenta? Inicia sesión aquí</NavLink>
+
+
+@code {
+    private RegisterModel model = new RegisterModel();
+
+    private class RegisterModel
+    {
+        [Required(ErrorMessage = "El Correo es obligatorio")]
+        [EmailAddress(ErrorMessage = "Correo no válido")]
+        public string email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
+        [DataType(DataType.Password)]
+        public string password { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
+        [DataType(DataType.Password)]
+        public string confirmPassword { get; set; } = string.Empty;
+    }
+}
