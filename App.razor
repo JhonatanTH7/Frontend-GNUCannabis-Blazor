@@ -3,6 +3,34 @@
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
-        <h1>Página no encontrada</h1>
+        <div class="notfound-container">
+            <h1 class="title fw-semibold mb-3">Página no encontrada</h1>
+            <p>Lo sentimos, la página que buscas no existe.</p>
+            <p>Serás redirigido a la página principal en 5 segundos.</p>
+            <p>Si no eres redirigido, haz clic <a href="/">aquí</a>.</p>
+            <p>Si el problema persiste, por favor contacta al administrador del sistema.</p>
+        </div>
+
+        <style>
+            .notfound-container {
+                height: 100vh;
+                background-color: var(--color-background);
+            }
+
+            .notfound-container p {
+                text-align: center;
+            }
+
+            .notfound-container a {
+                color: blue;
+                text-decoration: underline;
+            }
+        </style>
+
+        <script>
+            setTimeout(function () {
+                window.location.href = '/';
+            }, 5000);
+        </script>
     </NotFound>
 </Router>

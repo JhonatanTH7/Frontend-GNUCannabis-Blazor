@@ -8,9 +8,20 @@
   --color-btnborder: #85bc7d;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 main {
   height: 100vh;
   width: 100vw;
   font-family: "Inter", sans-serif;
   background-color: var(--color-background);
+}
+
+.title {
+  font-size: calc(100vw / 17);
+  text-align: center;
 }

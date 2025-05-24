@@ -9,7 +9,7 @@
         <GNUInputGroup Label="Correo" Id="iptEmail" Name="iptEmail" Type="email" @bind-Value="@model.email" />
         <GNUInputGroup Label="Contraseña" Id="iptPassword" Name="iptPassword" Type="password"
             @bind-Value="@model.password" />
-        <GNUButton Text="Ingresar" ButtonType="submit" FontSize="calc(100vw/50)" />
+        <GNUButton Text="Ingresar" ButtonType="submit" />
     </EditForm>
 </div>
 
@@ -18,17 +18,12 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 100vh;
+        height: 100%;
         gap: calc(100vh/15);
     }
 
     .formContainer {
         gap: calc(100vh/30);
-        text-align: center;
-    }
-
-    .title {
-        font-size: calc(100vw/17);
         text-align: center;
     }
 </style>
@@ -43,8 +38,13 @@
         public string password { get; set; } = string.Empty;
     }
 
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
+
     private void ValidateCredentials()
     {
         Console.WriteLine($"Correo: {model.email}, Contraseña: {model.password}");
+        NavigationManager?.NavigateTo("/MainMenu");
+
     }
 }

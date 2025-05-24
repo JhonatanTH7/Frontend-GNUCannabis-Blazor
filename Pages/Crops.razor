@@ -1,0 +1,138 @@
+@page "/Crops"
+@using GNUCannabis.Pages.Components
+@using GNUCannabis.Models;
+@using GNUCannabis.Services;
+@inject CropService service;
+
+<PageTitle>Cultivos</PageTitle>
+
+<GNUBackButton RedirectUrl="/MainMenu" />
+
+<div class="d-flex flex-column content">
+    <h1 class="title fw-semibold">Cultivos</h1>
+    <div class="table-wrapper">
+        <div class="table-responsive h-fit-content">
+            <table class="table table-bordered table-striped table-hover text-center mb-0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Tipo Cultivo</th>
+                        <th>Plantas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (crops.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No hay Plantas registradas</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var crop in crops)
+                        {
+                            <tr>
+                                <td>@crop.IdCultivo</td>
+                                <td>@crop.Nombre</td>
+                                <td>@crop.TipoCultivo</td>
+                                <td>
+                                    @{
+                                        var url = $"/Plants/Crop/{crop.IdCultivo}";
+                                    }
+                                    <GNUButton Text="Ver" RedirectUrl="@url" FontSize="calc(100vw/75)" HorizontalPadding="14"
+                                        VerticalPadding="3" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .content {
+        height: 100vh;
+        align-items: center;
+
+        h1 {
+            display: flex;
+            height: 30%;
+            align-items: end;
+            justify-content: center;
+        }
+
+        .table-wrapper {
+            display: flex;
+            height: 80%;
+            width: 80%;
+            max-width: 80%;
+            padding-top: 5%;
+            padding-bottom: 5%;
+
+            table {
+                height: fit-content;
+                width: 100%;
+                font-size: calc(100vw/55);
+            }
+
+        }
+    }
+
+    .h-fit-content {
+        height: fit-content;
+        width: 100%;
+    }
+</style>
+
+@code {
+    private List<Crop> crops = new List<Crop>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetCrops();
+    }
+
+    private async Task GetCrops()
+    {
+        try
+        {
+            var resultado = await service.GetCropsAsync();
+            if (resultado != null)
+            {
+                crops = resultado;
+            }
+            else
+            {
+                crops = new List<Crop>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    private async Task GetCropById(int id)
+    {
+        try
+        {
+            var resultado = await service.GetCropByIdAsync(id);
+            if (resultado != null)
+            {
+                crops[0] = resultado;
+            }
+            else
+            {
+                crops = new List<Crop>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+}

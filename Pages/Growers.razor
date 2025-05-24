@@ -1,0 +1,118 @@
+@page "/Growers"
+@using GNUCannabis.Pages.Components
+@using GNUCannabis.Models;
+@using GNUCannabis.Services;
+@inject GrowerService service
+
+<PageTitle>Jardineros</PageTitle>
+
+<GNUBackButton RedirectUrl="/MainMenu" />
+
+<div class="d-flex flex-column content">
+    <h1 class="title fw-semibold">Jardineros</h1>
+    <div class="table-wrapper">
+        <div class="table-responsive h-fit-content">
+            <table class="table table-bordered table-striped table-hover text-center mb-0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Cultivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (growers.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center">No hay Jardineros registrados</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var grower in growers)
+                        {
+                            <tr>
+                                <td>@grower.IdUsuario</td>
+                                <td>@grower.Persona</td>
+                                <td>@grower.Correo</td>
+                                <td>@grower.Rol</td>
+                                <td>@grower.Estado</td>
+                                <td>@grower.Cultivo</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .content {
+        height: 100vh;
+        align-items: center;
+
+        h1 {
+            display: flex;
+            height: 30%;
+            align-items: end;
+            justify-content: center;
+        }
+
+        .table-wrapper {
+            display: flex;
+            height: 80%;
+            width: 80%;
+            max-width: 80%;
+            padding-top: 5%;
+            padding-bottom: 5%;
+
+            table {
+                height: fit-content;
+                width: 100%;
+                font-size: calc(100vw/55);
+            }
+
+        }
+    }
+
+    .h-fit-content {
+        height: fit-content;
+        width: 100%;
+    }
+</style>
+
+@code {
+    public List<Grower> growers { get; set; } = new List<Grower>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetGrowers();
+    }
+
+
+    private async Task GetGrowers()
+    {
+        try
+        {
+            var resultado = await service.GetGrowersAsync();
+            if (resultado != null)
+            {
+                growers = resultado;
+            }
+            else
+            {
+                growers = new List<Grower>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+
+        }
+    }
+
+}

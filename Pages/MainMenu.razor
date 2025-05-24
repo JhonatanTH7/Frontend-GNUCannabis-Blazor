@@ -1,0 +1,29 @@
+@page "/MainMenu"
+@using GNUCannabis.Pages.Components
+
+<PageTitle>Menu</PageTitle>
+<div class="content">
+    <h1 class="title fw-semibold">Bienvenidos</h1>
+    <div class="pages">
+        <GNUButton Text="Cultivos" RedirectUrl="/Crops" Width="40vw" />
+        <GNUButton Text="Jardineros" RedirectUrl="/Growers" Width="40vw" />
+    </div>
+    <GNUButton Text="Cerrar Sesion" RedirectUrl="/" />
+</div>
+
+<style>
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .pages {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5vh;
+    }
+</style>

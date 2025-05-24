@@ -1,21 +1,21 @@
 @if (ButtonType == "submit")
 {
     <button type="submit" class="GNUButton"
-        style="padding: @(VerticalPadding)px @(HorizontalPadding)px; font-size: @(FontSize);">
+        style="padding: @(VerticalPadding)px @(HorizontalPadding)px; font-size: @(FontSize); height: @(Height); width: @(Width);">
         @Text
     </button>
 }
 else
 {
     <button type="@ButtonType" class="GNUButton"
-        style="padding: @(VerticalPadding)px @(HorizontalPadding)px;  font-size: @(FontSize);" @onclick="HandleClick">
+        style="padding: @(VerticalPadding)px @(HorizontalPadding)px;  font-size: @(FontSize); height: @(Height); width: @(Width);"
+        @onclick="HandleClick">
         @Text
     </button>
 }
 
 <style>
     .GNUButton {
-        height: fit-content;
         color: var(--color-black);
         font-weight: 600;
         border: 2px solid var(--color-btnborder);
@@ -44,7 +44,13 @@ else
     public required string Text { get; set; }
 
     [Parameter]
-    public string FontSize { get; set; } = "30px";
+    public string FontSize { get; set; } = "calc(100vw/50)";
+
+    [Parameter]
+    public string Height { get; set; } = "fit-content";
+
+    [Parameter]
+    public string Width { get; set; } = "fit-content";
 
     [Parameter]
     public string VerticalPadding { get; set; } = "16";

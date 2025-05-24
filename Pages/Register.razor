@@ -1,5 +1,6 @@
 @page "/register"
 @using GNUCannabis.Pages.Components
+@inject IJSRuntime JS
 
 <PageTitle>Registro</PageTitle>
 <GNUBackButton />
@@ -9,17 +10,27 @@
         <GNUInputGroup Label="Correo" Id="iptEmail" Name="iptEmail" Type="email" @bind-Value="@model.email" />
         <GNUInputGroup Label="Contraseña" Id="iptPassword" Name="iptPassword" Type="password"
             @bind-Value="@model.password" />
-        <GNUInputGroup Label="Confirmar Contraseña" Id="iptConfirmPassword" Type="password" />
-        <GNUButton Text="Enviar" ButtonType="submit" FontSize="calc(100vw/50)" />
+        <GNUInputGroup Label="Confirmar Contraseña" Id="iptConfirmPassword" Type="password" @bind-Value="@model.confirmPassword"/>
+        <GNUButton Text="Enviar" ButtonType="submit" />
     </EditForm>
 </div>
+
+<div class="alert"
+    role="alert"
+    style="position: absolute; top: 2rem; right: 2rem; z-index: 1000; background-color: var(--color-btnborder); color: var(--color-white); display: @((Modal) ? "block" : "none")">
+    <span class="fw-semibold">
+        Las contraseñas no coinciden.
+    </span>
+    <button type="button" class="btn-close ms-2" @onclick="() => Modal = false"></button>
+</div>
+
 
 <style>
     .content {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 100vh;
+        height: 100%;
         gap: calc(100vh/15);
     }
 
@@ -28,13 +39,14 @@
         text-align: center;
     }
 
-    .title {
-        font-size: calc(100vw/17);
-        text-align: center;
+    .infoModal{
+        position: absolute;
     }
 </style>
 
 @code {
+    private bool Modal { get; set; } = false;
+
     private RegisterModel model = new RegisterModel();
 
     private class RegisterModel
@@ -45,8 +57,20 @@
 
         public string confirmPassword { get; set; } = string.Empty;
     }
-    private void ValidateCredentials()
+
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
+
+    private  void ValidateCredentials()
     {
+        if(model.password != model.confirmPassword)
+        {
+            Console.WriteLine("Las contraseñas no coinciden.");
+            Modal = true;
+            return;
+        }
         Console.WriteLine($"Correo: {model.email}, Contraseña: {model.password}, Confirmar Contraseña: {model.confirmPassword}");
+        NavigationManager?.NavigateTo("/MainMenu");
     }
+
 }
