@@ -1,15 +1,14 @@
-@* @using Microsoft.AspNetCore.Components *@
-
 @if (ButtonType == "submit")
 {
-    <button type="submit" class="GNUButton" style="padding: @(VerticalPadding)px @(HorizontalPadding)px;">
+    <button type="submit" class="GNUButton"
+        style="padding: @(VerticalPadding)px @(HorizontalPadding)px; font-size: @(FontSize);">
         @Text
     </button>
 }
 else
 {
-    <button type="@ButtonType" class="GNUButton" style="padding: @(VerticalPadding)px @(HorizontalPadding)px;"
-        @onclick="HandleClick">
+    <button type="@ButtonType" class="GNUButton"
+        style="padding: @(VerticalPadding)px @(HorizontalPadding)px;  font-size: @(FontSize);" @onclick="HandleClick">
         @Text
     </button>
 }
@@ -17,18 +16,23 @@ else
 <style>
     .GNUButton {
         height: fit-content;
-        color: #000000;
-        font-size: 30px;
+        color: var(--color-black);
         font-weight: 600;
-        border: 2px solid #85bc7d;
+        border: 2px solid var(--color-btnborder);
         border-radius: 40px;
-        background-color: #d6ffe1;
+        background-color: var(--color-btnbackground);
         box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.25);
+        outline: none;
     }
 
     .GNUButton:hover {
-        background-color: #85bc7d;
-        color: #ffffff;
+        color: var(--color-white);
+        background-color: var(--color-btnborder);
+    }
+
+    .GNUButton:focus,
+    .GNUButton:focus-visible {
+        border: 3px solid var(--color-btnborder);
     }
 </style>
 
@@ -40,8 +44,13 @@ else
     public required string Text { get; set; }
 
     [Parameter]
-    public int VerticalPadding { get; set; } = 16;
-    public int HorizontalPadding { get; set; } = 26;
+    public string FontSize { get; set; } = "30px";
+
+    [Parameter]
+    public string VerticalPadding { get; set; } = "16";
+
+    [Parameter]
+    public string HorizontalPadding { get; set; } = "26";
 
     [Parameter]
     public EventCallback OnClick { get; set; }

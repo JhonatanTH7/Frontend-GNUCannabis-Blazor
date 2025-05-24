@@ -1,0 +1,19 @@
+@using GNUCannabis.Pages.Components
+
+
+<nav class="position-absolute nav">
+    <GNUButton Text="Regresar" ButtonType="button" RedirectUrl="@RedirectUrl" FontSize="calc(100vw/60)"
+        VerticalPadding="14" HorizontalPadding="24" />
+</nav>
+
+<style>
+    .nav {
+        top: 50px;
+        left: 50px;
+    }
+</style>
+
+@code {
+    [Parameter]
+    public string RedirectUrl { get; set; } = "/";
+}

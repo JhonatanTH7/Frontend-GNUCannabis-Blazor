@@ -3,19 +3,24 @@
 
 <PageTitle>GNUCannabis</PageTitle>
 
-<div class="upper-side">
-
-    <img src="GNUCannabis_logo.png" alt="Logo GNUCannabis" class="logo" />
-</div>
-
-<div class="lower-side">
-    <GNUButton Text="Iniciar Sesion" RedirectUrl="/login">
-    </GNUButton>
-    <GNUButton Text="Registrarse" RedirectUrl="/register">
-    </GNUButton>
+<div class="initial-page">
+    <div class="upper-side">
+        <img src="Logo_GNUCannabis.webp" alt="Logo GNUCannabis" class="logo" />
+    </div>
+    <div class="lower-side">
+        <GNUButton Text="Iniciar Sesion" RedirectUrl="/login" FontSize="calc(100vw/60)" />
+        <GNUButton Text="Registrarse" RedirectUrl="/register" FontSize="calc(100vw/60)" />
+    </div>
 </div>
 
 <style>
+    .initial-page {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
+    }
+
     .upper-side,
     .lower-side {
         width: 100%;
@@ -25,15 +30,15 @@
 
     .upper-side {
         align-items: center;
-        height: 70%;
+        height: 80%;
     }
 
     .lower-side {
-        height: 30vh;
+        height: 20%;
         gap: 20vw;
     }
 
     .logo {
-        height: 60%;
+        width: 60%;
     }
 </style>

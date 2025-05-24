@@ -1,0 +1,61 @@
+<div class="inptGroup">
+    <label class="fw-semibold" for="@Id">@Label</label>
+    <input class="GNUInput" type="@Type" id="@Id" name="@Name" @bind="Value" required @oninput="OnInputChanged" />
+</div>
+
+<style>
+    .GNUInput {
+        color: var(--color-btnborder);
+        font-size: calc(100vw/45);
+        font-weight: 600;
+        width: 50%;
+        height: calc((100vw/17)*0.7);
+        border: 1px solid var(--color-btnborder);
+        border-radius: 30px;
+        text-align: center;
+        outline: none;
+    }
+
+    .GNUInput:focus,
+    .GNUInput:focus-visible {
+        border: 3px solid var(--color-btnborder);
+    }
+
+    .inptGroup {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: calc(100vh/20);
+    }
+
+    .inptGroup label {
+        font-size: calc(100vw/35);
+    }
+</style>
+
+@code {
+    [Parameter]
+    public required string Label { get; set; }
+
+    [Parameter]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public string Name { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Type { get; set; } = "text";
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        var newValue = e.Value?.ToString() ?? string.Empty;
+        await ValueChanged.InvokeAsync(newValue);
+    }
+}
